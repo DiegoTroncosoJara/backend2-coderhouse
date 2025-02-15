@@ -3,6 +3,7 @@ import Services from "./service.manager.js";
 import { userDao } from "../daos/mongodb/user.dao.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { cartService } from "./cart.services.js";
 
 class UserService extends Services {
   constructor() {
@@ -11,11 +12,13 @@ class UserService extends Services {
 
   generateToken = (user) => {
     const payload = {
+      // _id: user._id,
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
       age: user.age,
       role: user.role,
+      cart: user.cart
     };
 
     return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "20m" });
@@ -38,9 +41,11 @@ class UserService extends Services {
         const newUser = await this.dao.register(user);
         return newUser;
       }
+      const cartUser = await cartService.createCart();
       const newUser = await this.dao.register({
         ...user,
         password: createHash(password),
+        cart: cartUser._id
       });
       return newUser;
     } catch (error) {
