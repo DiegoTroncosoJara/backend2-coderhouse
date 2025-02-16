@@ -16,4 +16,6 @@ router.get('/admin', [passportCall('jwt'), roleAuth('admin')], (req, res) => {
   res.json({ message: 'Bienvenido, administrador!' })
 })
 
+router.get('/logout', userController.logout)
+
 export default router
