@@ -1,17 +1,19 @@
-import { Router } from "express";
-import {
-  userController,
-} from "../controllers/user.controller.js";
-import { passportCall } from "../passport/passportCall.js";
-// import { roleAuth } from '../middlewares/roleAuth.js'
+import { Router } from 'express'
+import { userController } from '../controllers/user.controller.js'
+import { passportCall } from '../passport/passportCall.js'
+import { roleAuth } from '../middlewares/roleAuth.js'
 
-const router = Router();
+const router = Router()
 
-router.post("/register", userController.register);
+router.post('/register', userController.register)
 
-router.post("/login", userController.login);
+router.post('/login', userController.login)
 
-router.get("/current", [passportCall('current')], userController.privateData);
+router.get('/current', [passportCall('current')], userController.privateData)
 
+// Ruta protegida solo para administradores
+router.get('/admin', [passportCall('jwt'), roleAuth('admin')], (req, res) => {
+  res.json({ message: 'Bienvenido, administrador!' })
+})
 
-export default router;
+export default router
