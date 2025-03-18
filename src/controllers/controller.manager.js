@@ -21,7 +21,7 @@ export default class Controllers {
       next(error);
     }
   }
-  async create(req, res, next) {
+  create = async(req, res, next)=> {
     try {
       const response = await this.service.create(req.body);
       res.json(response);
