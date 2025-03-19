@@ -1,5 +1,6 @@
 import Controllers from './controller.manager.js'
 import { userService } from '../services/user.services.js'
+import UserResDTO from '../dtos/user/user.res.dto.js'
 
 class UserController extends Controllers {
   constructor () {
@@ -37,8 +38,10 @@ class UserController extends Controllers {
 
       console.log('req.user: ', req.user)
 
+      const user = new UserResDTO(req.user)
+
       res.json({
-        user: req.user
+        user: user
       })
     } catch (error) {
       next(error)

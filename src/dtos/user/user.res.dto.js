@@ -1,8 +1,9 @@
 export default class UserResDTO {
-  constructor (product) {
-    this.nombre = product.first_name
-    this.apellido = product.last_name
-    this.email = product.email
-    this.edad = product.age
+  constructor (user) {
+    this.nombre = user.first_name
+    this.apellido = user.last_name
+    this.email = user.email
+    this.edad = user.age
+    this.rol = user.role
   }
 }
