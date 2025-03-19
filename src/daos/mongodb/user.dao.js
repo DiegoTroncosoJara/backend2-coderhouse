@@ -1,34 +1,36 @@
 import { UserModel } from './models/user.model.js'
-import MongoDao from "./mongo.dao.js";
+import MongoDao from './mongo.dao.js'
 
 class UserDaoMongo extends MongoDao {
-  constructor() {
+  constructor () {
     super(UserModel)
   }
 
-  async register(user) {
+  async register (user) {
     try {
-      return await this.model.create(user);
+      return await this.model.create(user)
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
   }
 
-  async getById(id) {
+  async getById (id) {
     try {
-      return await this.model.findById(id).populate("cart");
+      return await this.model.findById(id).populate('cart')
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
   }
 
-  async getByEmail(email) {
+  async getByEmail (email) {
     try {
-      return await this.model.findOne({ email });
+      console.log('email: ', email)
+
+      return await this.model.findOne({ email })
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
   }
 }
 
-export const userDao = new UserDaoMongo();
+export const userDao = new UserDaoMongo()

@@ -1,5 +1,5 @@
-import factory from '../daos/factory.js'
-const { prodDao } = factory
+import persistence from '../daos/persistence.js'
+const { prodDao } = persistence
 import ProductResDTO from '../dtos/product/product.res.dto.js'
 import ProductReqDTO from '../dtos/product/product.req.dto.js'
 

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose'
 
 const UserSchema = new Schema({
   first_name: {
@@ -6,17 +6,17 @@ const UserSchema = new Schema({
     required: true,
     // minlength: 5,
     minLength: [5, 'Debe contener al menos 5 caracteres'],
-    maxlength: 50,
+    maxlength: 50
   },
   last_name: {
     type: String,
-    required: [true, 'El apellido es obligatorio'],
+    required: [true, 'El apellido es obligatorio']
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+    match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
   },
   age: {
     type: Number,
@@ -28,14 +28,14 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-    default: ' ',
+    default: ' '
   },
   role: {
     type: String,
-    default: "user",
+    default: 'user'
   },
   image: {
-    type: String,
+    type: String
   },
   isGithub: {
     type: Boolean,
@@ -45,11 +45,11 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false
   },
-  cart: {       
+  cart: {
     type: Schema.Types.ObjectId,
-    ref: "carts",
+    ref: 'carts',
     default: null
   }
-});
+})
 
-export const UserModel = model("users", UserSchema);
+export const UserModel = model('users', UserSchema)

@@ -4,7 +4,7 @@ import { productValidator } from '../middlewares/product.validator.js'
 
 const router = Router()
 
-router.post('/', [productValidator], productController.create)
+router.post('/', [productValidator], productController.createProd)
 
 router.get('/', productController.getAll)
 
