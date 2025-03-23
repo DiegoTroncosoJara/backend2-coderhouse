@@ -1,51 +1,58 @@
-import Services from "./service.manager.js";
-import CartDaoMongoDB from "../daos/mongodb/cart.dao.js";
-const cartDao = new CartDaoMongoDB();
+import Services from './service.manager.js'
+// import CartDaoMongoDB from "../daos/mongodb/cart.dao.js";
+// const cartDao = new CartDaoMongoDB();
+import persistence from '../daos/persistence.js'
+const { cartDao } = persistence
+import { cartRepository } from '../repository/cart.repository.js'
 
 class CartServices extends Services {
-  constructor() {
-    super(cartDao);
+  constructor () {
+    super(cartDao)
   }
 
-  createCart = async() =>{
+  createCart = async () => {
     try {
-      return await this.dao.create();
+      return await cartRepository.create()
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
   addProdToCart = async (cartId, prodId) => {
     try {
-      return await this.dao.addProdToCart(cartId, prodId);
+      return await cartRepository.addProdToCart(cartId, prodId)
     } catch (error) {
-      throw (error);
+      throw error
     }
-  };
+  }
 
   removeProdToCart = async (cartId, prodId) => {
     try {
-      return await this.dao.removeProdToCart(cartId, prodId);
+      return await cartRepository.removeProdToCart(cartId, prodId)
     } catch (error) {
-      throw (error);
+      throw error
     }
-  };
+  }
 
   updateProdQuantityToCart = async (cartId, prodId, quantity) => {
     try {
-      return await this.dao.updateProdQuantityToCart(cartId, prodId, quantity);
+      return await cartRepository.updateProdQuantityToCart(
+        cartId,
+        prodId,
+        quantity
+      )
     } catch (error) {
-      throw (error);
+      throw error
     }
-  };
+  }
 
-  clearCart = async (cartId) => {
+  clearCart = async cartId => {
     try {
-      return await this.dao.clearCart(cartId);
+      return await cartRepository.clearCart(cartId)
     } catch (error) {
-      throw (error);
+      throw error
     }
-  };
+  }
 }
 
-export const cartService = new CartServices();
+export const cartService = new CartServices()

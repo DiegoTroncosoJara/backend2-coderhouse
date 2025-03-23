@@ -6,7 +6,7 @@ Aspectos a Incluir:
 
 1. **Patrón Repository:**
    - Implementar el patrón Repository para trabajar con el DAO (Data Access Object) dentro de la lógica de negocio.
-2. **Modificación de la Ruta :**
+2. **Modificación de la Ruta :** ✅
 
    **`/current`**
 
@@ -51,6 +51,8 @@ El middleware de autorización se integra perfectamente con la estrategia "curre
 - **Modelo de Ticket y Lógica de Compra:**
 
 El modelo Ticket se crea correctamente con todos los campos necesarios y se implementa una lógica de compra robusta que verifica el stock de los productos, genera tickets y maneja compras completas e incompletas de manera eficiente.
+
+<!-- PRIMERA ENTREGA -->
 
 # Primera entrega
 
