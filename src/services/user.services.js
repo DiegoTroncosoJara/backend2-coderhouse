@@ -1,16 +1,18 @@
-import { createHash, isValidPassword } from "../utils.js";
-import Services from "./service.manager.js";
-import { userDao } from "../daos/mongodb/user.dao.js";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
-import { cartService } from "./cart.services.js";
-
+import { createHash, isValidPassword } from '../utils.js'
+import Services from './service.manager.js'
+// import { userDao } from "../daos/mongodb/user.dao.js";
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
+import { cartService } from './cart.services.js'
+import persistence from '../daos/persistence.js'
+const { userDao } = persistence
+import { userRepository } from '../repository/user.repository.js'
 class UserService extends Services {
-  constructor() {
-    super(userDao);
+  constructor () {
+    super(userDao)
   }
 
-  generateToken = (user) => {
+  generateToken = user => {
     const payload = {
       // _id: user._id,
       first_name: user.first_name,
@@ -19,52 +21,52 @@ class UserService extends Services {
       age: user.age,
       role: user.role,
       cart: user.cart
-    };
-
-    return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "20m" });
-  };
-
-  getUserByEmail = async (email) => {
-    try {
-      return await this.dao.getByEmail(email);
-    } catch (error) {
-      throw new Error(error);
     }
-  };
 
-  register = async (user) => {
+    return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '20m' })
+  }
+
+  getUserByEmail = async email => {
     try {
-      const { email, password, isGithub } = user;
-      const existUser = await this.getUserByEmail(email);
-      if (existUser) throw new Error("User already exists");
+      return await userRepository.getByEmail(email)
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  register = async user => {
+    try {
+      const { email, password, isGithub } = user
+      const existUser = await this.getUserByEmail(email)
+      if (existUser) throw new Error('User already exists')
       if (isGithub) {
-        const newUser = await this.dao.register(user);
-        return newUser;
+        const newUser = await userRepository.register(user)
+        return newUser
       }
-      const cartUser = await cartService.createCart();
-      const newUser = await this.dao.register({
+      const cartUser = await cartService.createCart()
+      const newUser = await userRepository.register({
         ...user,
         password: createHash(password),
         cart: cartUser._id
-      });
-      return newUser;
+      })
+      return newUser
     } catch (error) {
-      throw error;
+      throw error
     }
-  };
+  }
 
-  login = async (user) => {
+  login = async user => {
     try {
-      const { email, password } = user;
-      const userExist = await this.getUserByEmail(email);
-      if (!userExist) throw new Error("User not found");
-      const passValid = isValidPassword(password, userExist);
-      if (!passValid) throw new Error("incorrect credentials");
-      return this.generateToken(userExist);
+      const { email, password } = user
+      const userExist = await this.getUserByEmail(email)
+      if (!userExist) throw new Error('User not found')
+      const passValid = isValidPassword(password, userExist)
+      if (!passValid) throw new Error('incorrect credentials')
+      return this.generateToken(userExist)
     } catch (error) {
-      throw error;
+      throw error
     }
-  };
+  }
 }
 
-export const userService = new UserService();
+export const userService = new UserService()
