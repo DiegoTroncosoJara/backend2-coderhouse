@@ -4,7 +4,7 @@ Mejorar la arquitectura del servidor desarrollado durante el curso, enfocándose
 
 Aspectos a Incluir:
 
-1. **Patrón Repository:**
+1. **Patrón Repository:** ✅
    - Implementar el patrón Repository para trabajar con el DAO (Data Access Object) dentro de la lógica de negocio.
 2. **Modificación de la Ruta :** ✅
 

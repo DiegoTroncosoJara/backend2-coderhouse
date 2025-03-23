@@ -3,6 +3,7 @@ import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import usersRouter from './routes/users.router.js'
 import productsRouter from './routes/products.router.js'
+import emailRouter from './routes/email.router.js'
 import { errorHandler } from './middlewares/errorHandler.js'
 import passport from 'passport'
 import MongoStore from 'connect-mongo'
@@ -34,6 +35,7 @@ app.use(passport.session())
 
 app.use('/users', usersRouter)
 app.use('/products', productsRouter)
+app.use('/email', emailRouter)
 app.use(errorHandler)
 
 const PORT = 8080
