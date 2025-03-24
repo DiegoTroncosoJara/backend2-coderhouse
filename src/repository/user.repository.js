@@ -6,6 +6,7 @@ import UserResDTO from '../dtos/user/user.res.dto.js'
 
 class UserRepository {
   constructor () {
+    if (!userDao) throw new Error('userDao no inicializado')
     this.dao = userDao
   }
 
@@ -31,6 +32,7 @@ class UserRepository {
   getUserByEmail = async email => {
     try {
       const response = await this.dao.getByEmail(email)
+
       if (!response) return null
       return new UserResDTO(response)
     } catch (error) {

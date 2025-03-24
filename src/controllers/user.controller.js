@@ -47,6 +47,16 @@ class UserController extends Controllers {
       next(error)
     }
   }
+
+  forgotPassword = async (req, res, next) => {
+    try {
+      const { email } = req.body
+      await this.service.forgotPassword(email)
+      res.json({ message: 'Se envió el correo de recuperación' })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 export const userController = new UserController()

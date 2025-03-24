@@ -7,6 +7,8 @@ import { cartService } from './cart.services.js'
 import persistence from '../daos/persistence.js'
 const { userDao } = persistence
 import { userRepository } from '../repository/user.repository.js'
+
+import { sendPasswordResetEmail } from '../controllers/email.controller.js'
 class UserService extends Services {
   constructor () {
     super(userDao)
@@ -63,6 +65,20 @@ class UserService extends Services {
       const passValid = isValidPassword(password, userExist)
       if (!passValid) throw new Error('incorrect credentials')
       return this.generateToken(userExist)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  forgotPassword = async email => {
+    try {
+      console.log('forgotPassword: ', email)
+
+      const user = await userRepository.getUserByEmail(email)
+
+      if (!user) throw new Error('Usuario no encontrado')
+
+      await sendPasswordResetEmail(user)
     } catch (error) {
       throw error
     }

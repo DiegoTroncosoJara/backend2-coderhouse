@@ -10,7 +10,7 @@ import { initMongoDB } from '../db/connection.js'
 let prodDao
 let userDao
 let cartDao
-const persistence = process.argv[2]
+const persistence = process.argv[2] || 'mongo'
 // const persistence = 'fs'
 // const persistence = process.argv.PERSISTENCE;
 
@@ -33,5 +33,5 @@ switch (persistence) {
     break
 }
 
-export default { prodDao }
-// export default { prodDao, userDao, cartDao }
+// export default { prodDao }
+export default { prodDao, userDao, cartDao }

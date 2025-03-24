@@ -11,4 +11,6 @@ router.post('/login', userController.login)
 
 router.get('/current', [passportCall('current')], userController.privateData)
 
+router.post('/forgot-password', userController.forgotPassword)
+
 export default router
