@@ -32,9 +32,11 @@ class UserRepository {
   getUserByEmail = async email => {
     try {
       const response = await this.dao.getByEmail(email)
+      console.log('response: ', response)
 
       if (!response) return null
-      return new UserResDTO(response)
+      // AQUI NO OCUPO EL DTO PORQUE NECESITO LA PASS
+      return response
     } catch (error) {
       throw new Error(error)
     }

@@ -4,10 +4,10 @@ import { productValidator } from '../middlewares/product.validator.js'
 
 const router = Router()
 
-router.post('/', [productValidator], productController.createProd)
+// router.post('/', [productValidator], productController.createProd)
+router.post('/', productController.createProd)
 
 router.get('/', productController.getAll)
 
-//APLICA DTO
 router.get('/:id', productController.getProdById)
 export default router

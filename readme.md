@@ -12,7 +12,7 @@ Aspectos a Incluir:
 
    - Evitar enviar información sensible del usuario. Enviar un DTO (Data Transfer Object) que contenga solo la información necesaria y no sensible.
 
-3. **Sistema de Recuperación de Contraseña:**
+3. **Sistema de Recuperación de Contraseña:** ✅
    - Implementar un sistema de recuperación de contraseña que envíe un correo con un botón para restablecer la contraseña.
    - El enlace del correo debe expirar después de una hora de ser enviado.
    - Evitar que el usuario pueda restablecer la contraseña a la misma que tenía anteriormente.

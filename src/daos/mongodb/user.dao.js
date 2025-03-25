@@ -24,8 +24,6 @@ class UserDaoMongo extends MongoDao {
 
   async getByEmail (email) {
     try {
-      console.log('DAO email: ', email)
-
       return await this.model.findOne({ email })
     } catch (error) {
       throw new Error(error)

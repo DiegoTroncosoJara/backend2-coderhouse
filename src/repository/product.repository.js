@@ -11,6 +11,7 @@ class ProductRepository {
   createProd = async product => {
     try {
       const prodDTO = new ProductReqDTO(product)
+
       return await this.dao.create(prodDTO)
     } catch (error) {
       throw new Error(error)

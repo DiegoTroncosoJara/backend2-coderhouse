@@ -30,7 +30,7 @@ class UserService extends Services {
 
   getUserByEmail = async email => {
     try {
-      return await userRepository.getByEmail(email)
+      return await userRepository.getUserByEmail(email)
     } catch (error) {
       throw new Error(error)
     }
@@ -42,11 +42,11 @@ class UserService extends Services {
       const existUser = await this.getUserByEmail(email)
       if (existUser) throw new Error('User already exists')
       if (isGithub) {
-        const newUser = await userRepository.register(user)
+        const newUser = await userRepository.registerUser(user)
         return newUser
       }
       const cartUser = await cartService.createCart()
-      const newUser = await userRepository.register({
+      const newUser = await userRepository.registerUser({
         ...user,
         password: createHash(password),
         cart: cartUser._id
@@ -61,8 +61,12 @@ class UserService extends Services {
     try {
       const { email, password } = user
       const userExist = await this.getUserByEmail(email)
+      console.log('userExist: ', userExist)
+
       if (!userExist) throw new Error('User not found')
       const passValid = isValidPassword(password, userExist)
+      console.log('passValid: ', passValid)
+
       if (!passValid) throw new Error('incorrect credentials')
       return this.generateToken(userExist)
     } catch (error) {

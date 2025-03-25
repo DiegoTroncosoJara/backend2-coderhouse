@@ -12,7 +12,7 @@ class CartServices extends Services {
 
   createCart = async () => {
     try {
-      return await cartRepository.create()
+      return await cartRepository.createCart()
     } catch (error) {
       throw error
     }

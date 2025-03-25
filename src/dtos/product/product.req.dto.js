@@ -1,8 +1,8 @@
 export default class ProductReqDTO {
-    constructor(product){
-        this.nombre = product.name;
-        this.descripcion = product.description;
-        this.precio = product.price;
-        this.disponibilidad = product.stock
-    }
+  constructor (product) {
+    this.name = product.name
+    this.description = product.description
+    this.price = product.price
+    this.stock = product.stock
+  }
 }

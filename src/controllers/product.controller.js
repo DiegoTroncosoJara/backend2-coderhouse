@@ -6,7 +6,7 @@ class ProductController extends Controllers {
     super(prodService)
   }
 
-  createProd = async (req, res) => {
+  createProd = async (req, res, next) => {
     try {
       const response = await this.service.createProd(req.body)
       res.json(response)
@@ -15,7 +15,7 @@ class ProductController extends Controllers {
     }
   }
 
-  getProdById = async (req, res) => {
+  getProdById = async (req, res, next) => {
     try {
       const { id } = req.params
       const response = await this.service.getProdById(id)

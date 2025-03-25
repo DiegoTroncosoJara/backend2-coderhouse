@@ -5,6 +5,7 @@ import usersRouter from './routes/users.router.js'
 import productsRouter from './routes/products.router.js'
 import emailRouter from './routes/email.router.js'
 import passwordRouter from './routes/password.router.js'
+import cartRouter from './routes/cart.router.js'
 
 import { errorHandler } from './middlewares/errorHandler.js'
 import passport from 'passport'
@@ -46,6 +47,7 @@ app.set('views', path.join(path.resolve(), 'src/views'))
 app.use('/users', usersRouter)
 app.use('/products', productsRouter)
 app.use('/email', emailRouter)
+app.use('/cart', cartRouter)
 
 app.use('/api/auth', passwordRouter)
 
@@ -57,7 +59,7 @@ app.use('/api/auth', passwordRouter)
 
 app.use(errorHandler)
 
-const PORT = 8080
+const PORT = 8081
 
 mongoose
   .connect(process.env.MONGO_URL, {

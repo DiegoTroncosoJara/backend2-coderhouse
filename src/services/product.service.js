@@ -12,6 +12,8 @@ class ProductService extends Services {
 
   createProd = async data => {
     try {
+      console.log('data: ', data)
+
       return await prodRepository.createProd(data)
     } catch (error) {
       throw new Error(error)
