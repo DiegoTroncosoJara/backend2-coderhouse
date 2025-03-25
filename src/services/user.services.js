@@ -46,10 +46,12 @@ class UserService extends Services {
         return newUser
       }
       const cartUser = await cartService.createCart()
+      console.log('cartUser: ', cartUser)
+
       const newUser = await userRepository.registerUser({
         ...user,
         password: createHash(password),
-        cart: cartUser._id
+        cart: cartUser.id
       })
       return newUser
     } catch (error) {
