@@ -1,5 +1,6 @@
 import MongoDao from './mongo.dao.js'
 import { CartModel } from './models/cart.model.js'
+import mongoose from 'mongoose'
 
 export default class CartDaoMongoDB extends MongoDao {
   constructor () {
@@ -23,29 +24,54 @@ export default class CartDaoMongoDB extends MongoDao {
     }
   }
 
-  async addProdToCart (cartId, prodId) {
-    try {
-      const existProdInCart = await this.existProdInCart(cartId, prodId)
-      if (existProdInCart) {
-        return await this.model.findOneAndUpdate(
-          { _id: cartId, 'products.product': prodId },
-          {
-            $set: {
-              'products.$.quantity': existProdInCart.products[0].quantity + 1
-            }
-          },
-          { new: true }
-        )
-      } else {
-        return await this.model.findByIdAndUpdate(
-          cartId,
-          { $push: { products: { product: prodId } } },
-          { new: true }
-        )
-      }
-    } catch (error) {
-      throw new Error(error)
+  // async addProdToCart (cartId, prodId) {
+  //   try {
+  //     const existProdInCart = await this.existProdInCart(cartId, prodId)
+  //     if (existProdInCart) {
+  //       return await this.model.findOneAndUpdate(
+  //         { _id: cartId, 'products.product': prodId },
+  //         {
+  //           $set: {
+  //             'products.$.quantity': existProdInCart.products[0].quantity + 1
+  //           }
+  //         },
+  //         { new: true }
+  //       )
+  //     } else {
+  //       return await this.model.findByIdAndUpdate(
+  //         cartId,
+  //         { $push: { products: { product: prodId } } },
+  //         { new: true }
+  //       )
+  //     }
+  //   } catch (error) {
+  //     throw new Error(error)
+  //   }
+  // }
+  async addProdToCart (dto) {
+    const cart = await this.model.findById(dto.cartId)
+    if (!cart) throw new Error('Cart not found')
+
+    if (!mongoose.Types.ObjectId.isValid(dto.productId)) {
+      throw new Error('productId inválido')
     }
+
+    const productInCart = cart.products.find(
+      p => p.product?.toString() === dto.productId
+    )
+
+    if (productInCart) {
+      productInCart.quantity += 1
+    } else {
+      cart.products.push({
+        product: new mongoose.Types.ObjectId(dto.productId),
+        quantity: 1
+      })
+    }
+
+    await cart.save()
+
+    return await this.model.findById(dto.cartId).populate('products.product')
   }
 
   async existProdInCart (cartId, prodId) {

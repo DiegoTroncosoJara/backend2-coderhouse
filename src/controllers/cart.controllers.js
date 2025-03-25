@@ -13,7 +13,12 @@ export default class CartController extends Controllers {
     try {
       const { idCart } = req.params
       const { idProd } = req.params
+      console.log('idCart: ', idCart)
+      console.log('idProd: ', idProd)
+
       const newProdToUserCart = await this.service.addProdToCart(idCart, idProd)
+      console.log('newProdToUserCart: ', newProdToUserCart)
+
       if (!newProdToUserCart)
         createResponse(res, 404, { msg: 'Error add product to cart' })
       else createResponse(res, 200, newProdToUserCart)

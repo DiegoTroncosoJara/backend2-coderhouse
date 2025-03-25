@@ -20,7 +20,7 @@ class CartServices extends Services {
 
   addProdToCart = async (cartId, prodId) => {
     try {
-      return await cartRepository.addProdToCart(cartId, prodId)
+      return await cartRepository.addProductToCart(cartId, prodId)
     } catch (error) {
       throw error
     }

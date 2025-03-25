@@ -32,10 +32,14 @@ class CartRepository {
     }
   }
 
-  addProductToCart = async data => {
+  addProductToCart = async (cartId, prodId) => {
     try {
-      const dto = new AddProductToCartReqDTO(data.cartId, data.productId)
+      const dto = new AddProductToCartReqDTO(cartId, prodId)
+      console.log('dto: ', dto)
+
       const response = await this.dao.addProdToCart(dto)
+      console.log('response: ', response)
+
       return new CartResDTO(response)
     } catch (error) {
       throw new Error(error)
