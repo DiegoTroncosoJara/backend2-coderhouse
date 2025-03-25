@@ -6,9 +6,10 @@ export default class CartDaoMongoDB extends MongoDao {
   constructor () {
     super(CartModel)
   }
-  async create () {
+  async create (userId) {
     try {
       return await this.model.create({
+        user: userId,
         products: []
       })
     } catch (error) {
@@ -18,7 +19,10 @@ export default class CartDaoMongoDB extends MongoDao {
 
   async getById (id) {
     try {
-      return await this.model.findById(id).populate('products.product')
+      return await this.model
+        .findById(id)
+        .populate('user')
+        .populate('products.product')
     } catch (error) {
       throw new Error(error)
     }

@@ -14,9 +14,9 @@ class CartRepository {
     this.dao = cartDao
   }
 
-  createCart = async () => {
+  createCart = async userId => {
     try {
-      const response = await this.dao.create()
+      const response = await this.dao.create(userId)
       return new CartResDTO(response)
     } catch (error) {
       throw new Error(error)

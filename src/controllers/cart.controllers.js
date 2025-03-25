@@ -73,10 +73,12 @@ export default class CartController extends Controllers {
     }
   }
 
-  purchaseCart = async (req, res) => {
+  purchaseCart = async (req, res, next) => {
     const cartId = req.params.cid
     try {
       const cart = await cartDao.getById(cartId)
+      console.log('cart: ', cart)
+
       if (!cart)
         return res.status(404).json({ message: 'Carrito no encontrado' })
 
@@ -84,6 +86,8 @@ export default class CartController extends Controllers {
       const failedProducts = []
 
       for (const cartProd of cart.products) {
+        console.log('cartProd: ', cartProd)
+
         const prod = await prodDao.getById(cartProd.product._id)
         if (prod.stock >= cartProd.quantity) {
           // Restar stock
@@ -117,7 +121,7 @@ export default class CartController extends Controllers {
       // Crear Ticket
       const ticket = await TicketModel.create({
         amount: totalAmount,
-        purchaser: cart.userEmail // Asegúrate de tener el email en el carrito o pásalo por req.user
+        purchaser: cart.user.email
       })
 
       // Filtrar el carrito: dejar solo los productos que NO se pudieron comprar
