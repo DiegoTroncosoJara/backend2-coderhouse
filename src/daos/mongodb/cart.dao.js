@@ -8,6 +8,8 @@ export default class CartDaoMongoDB extends MongoDao {
   }
   async create (userId) {
     try {
+      console.log('CartDaoMongoDB userId: ', userId)
+
       return await this.model.create({
         user: userId,
         products: []

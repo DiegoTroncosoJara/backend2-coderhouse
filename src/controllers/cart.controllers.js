@@ -9,6 +9,16 @@ export default class CartController extends Controllers {
   constructor () {
     super(cartService)
   }
+
+  createCart = async (req, res, next) => {
+    try {
+      const { idUser } = req.params
+      const cart = await this.service.createCart(idUser)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   addProdToCart = async (req, res, next) => {
     try {
       const { idCart } = req.params

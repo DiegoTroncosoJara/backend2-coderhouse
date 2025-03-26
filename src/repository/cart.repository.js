@@ -16,6 +16,8 @@ class CartRepository {
 
   createCart = async userId => {
     try {
+      console.log('userId: ', userId)
+
       const response = await this.dao.create(userId)
       return new CartResDTO(response)
     } catch (error) {

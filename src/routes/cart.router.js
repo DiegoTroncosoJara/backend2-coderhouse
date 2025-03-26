@@ -24,4 +24,6 @@ router.delete('/clear/:idCart', controller.clearCart)
 
 router.post('/:cid/purchase', controller.purchaseCart)
 
+router.post('/:idUser', controller.createCart)
+
 export default router

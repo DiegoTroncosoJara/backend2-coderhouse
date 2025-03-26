@@ -10,9 +10,9 @@ class CartServices extends Services {
     super(cartDao)
   }
 
-  createCart = async () => {
+  createCart = async userId => {
     try {
-      return await cartRepository.createCart()
+      return await cartRepository.createCart(userId)
     } catch (error) {
       throw error
     }

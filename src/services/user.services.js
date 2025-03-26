@@ -36,23 +36,56 @@ class UserService extends Services {
     }
   }
 
+  // register = async user => {
+  //   try {
+  //     const { email, password, isGithub } = user
+  //     const existUser = await this.getUserByEmail(email)
+  //     if (existUser) throw new Error('User already exists')
+  //     if (isGithub) {
+  //       const newUser = await userRepository.registerUser(user)
+  //       return newUser
+  //     }
+  //     console.log('cartUser: ', cartUser)
+
+  //     const newUser = await userRepository.registerUser({
+  //       ...user,
+  //       password: createHash(password),
+  //       cart: cartUser.id
+  //     })
+  //     const cartUser = await cartService.createCart(newUser.id)
+
+  //     return newUser
+  //   } catch (error) {
+  //     throw error
+  //   }
+  // }
+
   register = async user => {
     try {
       const { email, password, isGithub } = user
+      console.log('user:', user)
+
       const existUser = await this.getUserByEmail(email)
       if (existUser) throw new Error('User already exists')
-      if (isGithub) {
-        const newUser = await userRepository.registerUser(user)
-        return newUser
-      }
-      const cartUser = await cartService.createCart()
-      console.log('cartUser: ', cartUser)
+      console.log('existUser: ', existUser)
 
-      const newUser = await userRepository.registerUser({
-        ...user,
-        password: createHash(password),
-        cart: cartUser.id
-      })
+      let newUser
+      if (isGithub) {
+        newUser = await userRepository.registerUser(user)
+      } else {
+        newUser = await userRepository.registerUser({
+          ...user,
+          password: createHash(password)
+        })
+        console.log('newUser en else: ', newUser)
+
+        const cartUser = await cartService.createCart(newUser.id)
+        console.log('cartUser: ', cartUser)
+
+        newUser = await userRepository.updateUserCart(newUser.id, cartUser.id)
+        console.log('usuario actualizado: ', newUser)
+      }
+
       return newUser
     } catch (error) {
       throw error

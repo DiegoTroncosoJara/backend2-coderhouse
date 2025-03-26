@@ -13,6 +13,8 @@ class UserRepository {
   registerUser = async userData => {
     try {
       const dto = new UserReqDTO(userData)
+      console.log('dto: ', dto)
+
       const response = await this.dao.register(dto)
       return new UserResDTO(response)
     } catch (error) {
@@ -37,6 +39,14 @@ class UserRepository {
       if (!response) return null
       // AQUI NO OCUPO EL DTO PORQUE NECESITO LA PASS
       return response
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  updateUserCart = async (userId, cartId) => {
+    try {
+      return await userDao.update(userId, { cart: cartId })
     } catch (error) {
       throw new Error(error)
     }
